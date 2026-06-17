@@ -1,7 +1,7 @@
 import { getUser } from "@/actions";
 import { getProjects } from "@/actions/get-projects";
 import { createProject } from "@/actions/create-project";
-import { MainContent } from "./main-content";
+import { MainContentClient } from "./main-content-client";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
@@ -26,5 +26,5 @@ export default async function Home() {
   }
 
   // For anonymous users, show the main content without a project
-  return <MainContent user={user} />;
+  return <MainContentClient user={user} />;
 }

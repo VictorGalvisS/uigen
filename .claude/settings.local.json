@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright",
+      "PowerShell(Start-Process \"http://localhost:3000\")",
+      "PowerShell($global = npm root -g; ls \"$global\\\\playwright\" -ErrorAction SilentlyContinue; ls \"$global\\\\@playwright\" -ErrorAction SilentlyContinue)",
+      "PowerShell(pnpm root *)",
+      "PowerShell(ls \"C:\\\\Users\\\\vicma\\\\AppData\\\\Local\\\\pnpm\\\\global\\\\v11\\\\node_modules\" | Where-Object { $_.Name -match \"playwright\" })",
+      "PowerShell(pnpm add *)",
+      "Skill(run)",
+      "PowerShell(cd \"D:\\\\Proyect-Personal\\\\claude-code\\\\uigen\" && pnpm dev 2>&1 &)",
+      "PowerShell(Start-Sleep -Seconds 8; \\(Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -ErrorAction SilentlyContinue\\).StatusCode)",
+      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 3 -ErrorAction Stop; Write-Host \"Server up: $\\($r.StatusCode\\)\" } catch { Write-Host \"Server not reachable: $_\" })",
+      "PowerShell(cd \"D:\\\\Proyect-Personal\\\\claude-code\\\\uigen\" && node -e \"require\\('playwright'\\)\" 2>&1; Write-Host \"Exit: $LASTEXITCODE\")"
+    ],
+    "deny": []
+  }
+}
