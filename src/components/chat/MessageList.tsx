@@ -14,7 +14,7 @@ interface MessageListProps {
 export function MessageList({ messages, isLoading }: MessageListProps) {
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto px-4 py-6">
+    <div className="flex flex-col px-4 py-6">
       <div className="space-y-6 max-w-4xl mx-auto w-full">
         {messages.map((message) => (
           <div
@@ -25,7 +25,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             )}
           >
             {message.role === "assistant" && (
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-9 h-9 rounded-lg bg-white border border-neutral-200 shadow-sm flex items-center justify-center">
                   <Bot className="h-4.5 w-4.5 text-neutral-700" />
                 </div>
@@ -108,7 +108,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
             </div>
             
             {message.role === "user" && (
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="w-9 h-9 rounded-lg bg-blue-600 shadow-sm flex items-center justify-center">
                   <User className="h-4.5 w-4.5 text-white" />
                 </div>

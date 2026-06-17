@@ -198,5 +198,5 @@ test("renders with correct layout classes", () => {
 
   const inputWrapper = screen.getByTestId("message-input").parentElement;
   expect(inputWrapper?.className).toContain("mt-4");
-  expect(inputWrapper?.className).toContain("flex-shrink-0");
+  expect(inputWrapper?.className).toContain("shrink-0");
 });

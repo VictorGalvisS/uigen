@@ -3,22 +3,16 @@
 import { useEffect, useRef } from "react";
 import { MessageList } from "./MessageList";
 import { MessageInput } from "./MessageInput";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "@/lib/contexts/chat-context";
 import { EmptyState } from "./EmptyState";
 
 export function ChatInterface() {
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const { messages, input, handleInputChange, handleSubmit, status } = useChat();
 
   useEffect(() => {
-    if (scrollAreaRef.current) {
-      const scrollContainer = scrollAreaRef.current.querySelector(
-        "[data-radix-scroll-area-viewport]"
-      );
-      if (scrollContainer) {
-        scrollContainer.scrollTop = scrollContainer.scrollHeight;
-      }
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -29,13 +23,11 @@ export function ChatInterface() {
           <EmptyState />
         </div>
       ) : (
-        <ScrollArea ref={scrollAreaRef} className="flex-1">
-          <div className="pr-4">
-            <MessageList messages={messages} isLoading={status === "streaming"} />
-          </div>
-        </ScrollArea>
+        <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto pr-1">
+          <MessageList messages={messages} isLoading={status === "streaming"} />
+        </div>
       )}
-      <div className="mt-4 flex-shrink-0">
+      <div className="mt-4 shrink-0">
         <MessageInput
           input={input}
           handleInputChange={handleInputChange}
