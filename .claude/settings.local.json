@@ -11,7 +11,10 @@
       "PowerShell(cd \"D:\\\\Proyect-Personal\\\\claude-code\\\\uigen\" && pnpm dev 2>&1 &)",
       "PowerShell(Start-Sleep -Seconds 8; \\(Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -ErrorAction SilentlyContinue\\).StatusCode)",
       "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 3 -ErrorAction Stop; Write-Host \"Server up: $\\($r.StatusCode\\)\" } catch { Write-Host \"Server not reachable: $_\" })",
-      "PowerShell(cd \"D:\\\\Proyect-Personal\\\\claude-code\\\\uigen\" && node -e \"require\\('playwright'\\)\" 2>&1; Write-Host \"Exit: $LASTEXITCODE\")"
+      "PowerShell(cd \"D:\\\\Proyect-Personal\\\\claude-code\\\\uigen\" && node -e \"require\\('playwright'\\)\" 2>&1; Write-Host \"Exit: $LASTEXITCODE\")",
+      "PowerShell(git push *)",
+      "PowerShell(gh *)",
+      "PowerShell($token = gh auth token; git remote set-url origin \"https://$token@github.com/VictorGalvisS/uigen.git\" && git push -u origin master)"
     ],
     "deny": []
   }
