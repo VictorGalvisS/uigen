@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
-    "setup": "pnpm install && pnpm prisma generate && pnpm prisma migrate dev",
-    "db:reset": "npx prisma migrate reset --force"
+    "setup": "pnpm install && pnpm exec prisma generate && pnpm exec prisma migrate dev",
+    "db:reset": "pnpm exec prisma migrate reset --force"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "1.2.12",
@@ -43,6 +43,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/mcp": "^0.0.41",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",

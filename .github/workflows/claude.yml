@@ -23,17 +23,31 @@ jobs:
       pull-requests: read
       issues: read
       id-token: write
-      actions: read # Required for Claude to read CI results on PRs
+      actions: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
       - name: Project Setup
         run: |
-          pnpm run setud
+          pnpm install
+          pnpm exec prisma generate
+          pnpm exec prisma migrate deploy
           pnpm run dev:daemon
+          sleep 5
 
       - name: Run Claude Code
         id: claude
@@ -41,14 +55,13 @@ jobs:
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
 
-          # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |
             actions: read
 
           custom_instructions: |
             The project is already set up with all dependencies installed.
             The server is already running at localhost:3000. Logs from it
-            are being written to logs.txt. if needed, you can querry the 
+            are being written to logs.txt. if needed, you can query the
             db with the 'sqlite3' cli. If needed, use the mcp__playwright
             set of tools to launch a browser and interact with the app.
 
@@ -56,8 +69,9 @@ jobs:
             {
               "mcpServers": {
                 "playwright": {
-                  "command": "npx",
+                  "command": "pnpm",
                   "args": [
+                    "dlx",
                     "@playwright/mcp@latest",
                     "--allowed-origins",
                     "localhost:3000;cdn.tailwindcss.com;esm.sh"
@@ -66,4 +80,4 @@ jobs:
               }
             }
 
-          allowed_tools: "Bash(npm:*),Bash(sqlite3:*),mcp__playwright__browser_snapshot,mcp__playwright__browser_click,mcp__playwright__browser_fill,mcp__playwright__browser_press,mcp__playwright__browser_select,mcp__playwright__browser_wait_for_selector,mcp__playwright__browser_wait_for_navigation"
+          allowed_tools: "Bash(pnpm:*),Bash(sqlite3:*),mcp__playwright__browser_snapshot,mcp__playwright__browser_click,mcp__playwright__browser_fill,mcp__playwright__browser_press,mcp__playwright__browser_select,mcp__playwright__browser_wait_for_selector,mcp__playwright__browser_wait_for_navigation"
